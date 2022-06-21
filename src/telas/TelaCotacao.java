@@ -14,6 +14,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import cadastro.TabelaPreco;
+
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 
 public class TelaCotacao {
 
@@ -87,11 +91,7 @@ public class TelaCotacao {
 		jCmbOrigem.setBounds(103, 22, 185, 26);
 		panel.add(jCmbOrigem);
 		
-		JComboBox jCmbDestino = new JComboBox();
-		jCmbDestino.setModel(new DefaultComboBoxModel(new String[] {"Selecione a Cidade...", "Ribeirao Preto", "Sao Paulo", "Curitiba", "Belo Horizonte", "Rio de Janeiro"}));
-		jCmbDestino.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		jCmbDestino.setBounds(103, 67, 185, 26);
-		panel.add(jCmbDestino);
+
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 207, 322, 158);
@@ -277,20 +277,21 @@ public class TelaCotacao {
 			new Object[][] {
 			},
 			new String[] {
-				"Altura", "Largura", "Comprimento", "Qtde Vol."
+				"Altura", "Largura", "Comprimento", "Qtde Vol.", "Peso\u00B3"
 			}
-		));
+		) {
+			Class[] columnTypes = new Class[] {
+				Object.class, Object.class, Object.class, Object.class, Double.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPane.setViewportView(table);
 		
-		JButton jbtnCalcular = new JButton("Calcular");
-		jbtnCalcular.addActionListener(new ActionListener() {
+		JComboBox jCmbDestino = new JComboBox();
+		jCmbDestino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-//------------------------Calcular Distancia do jeito mais easy --------------------
-				double distancia;
-				
-				//String cApple_Juice = String.format("%.2f", Apple_Juice);
-				//jlblCostofDrinks.setText(cApple_Juice);
 				
 				if (jCmbDestino.getSelectedItem().equals("Ribeirao Preto")) {
 					lblDistancia.setText("1");}
@@ -302,7 +303,37 @@ public class TelaCotacao {
 					lblDistancia.setText("540");}
 				if (jCmbDestino.getSelectedItem().equals("Rio de Janeiro")) {
 					lblDistancia.setText("717");}
+			}
+		});
+		jCmbDestino.setModel(new DefaultComboBoxModel(new String[] {"Selecione a Cidade...", "Ribeirao Preto", "Sao Paulo", "Curitiba", "Belo Horizonte", "Rio de Janeiro"}));
+		jCmbDestino.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		jCmbDestino.setBounds(103, 67, 185, 26);
+		panel.add(jCmbDestino);
+		
+		JButton jbtnCalcular = new JButton("Calcular");
+		jbtnCalcular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
+//------------------------Calcular Frete Valor (calculo mais basico) --------------------
+	
+				double fretevalor = Double.parseDouble(txtNF.getText()) * 0.005;
+				String fretevalortxt = String.format("%.2f", fretevalor);
+				lblFreteNF.setText(fretevalortxt);
+				
+				
+				
+				
+//------------------------Aliquota --------------------
+				
+				lblAliquota.setText("12%");
+				
+//------------------------Aliquota --------------------
+				
+				lblPedagio.setText("4,85");				
+				
+				
+				//lblAliquota
+				//lblICMS
 				
 			}
 		});
@@ -328,6 +359,7 @@ public class TelaCotacao {
 		jbtnSair.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		jbtnSair.setBounds(993, 500, 89, 23);
 		frame.getContentPane().add(jbtnSair);
+		
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
@@ -374,7 +406,30 @@ public class TelaCotacao {
 						txtLargura.getText(),
 						txtComprimento.getText(),
 						txtQtdeVolume.getText(),
+						(Double.parseDouble(txtAltura.getText())/100*
+						(Double.parseDouble(txtLargura.getText())/100)*
+						(Double.parseDouble(txtComprimento.getText())/100)*
+						Double.parseDouble(txtQtdeVolume.getText())*300)
+								
 				});
+				double sum = 0;
+				
+				for (int i = 0; i < table.getRowCount(); i++) {
+					sum = sum + Double.parseDouble(table.getValueAt(i, 4).toString());
+					lblCubagem.setText(Double.toString(sum));
+				}
+				
+				double pesoconsiderado;
+				if( Double.parseDouble(lblCubagem.getText()) > Double.parseDouble(txtPeso.getText())) {
+					pesoconsiderado = Double.parseDouble(lblCubagem.getText());
+					String pesoconsideradostring = String.format("%.2f", pesoconsiderado);
+					lblPesoConsiderado.setText(pesoconsideradostring);
+				} else {
+					pesoconsiderado = Double.parseDouble(txtPeso.getText());
+					String pesoconsideradostring = String.format("%.2f", pesoconsiderado);
+					lblPesoConsiderado.setText(pesoconsideradostring);
+				}
+								
 			}
 		});
 		jbtnCubagem.setFont(new Font("Tahoma", Font.BOLD, 19));
@@ -399,5 +454,15 @@ public class TelaCotacao {
 		txtComprimento.setColumns(10);
 		txtComprimento.setBounds(191, 85, 106, 20);
 		panel_1_1.add(txtComprimento);
+		
+		JButton btnTabelaDePreo = new JButton("Tabela de Pre\u00E7o");
+		btnTabelaDePreo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TabelaPreco.main(null);
+			}
+		});
+		btnTabelaDePreo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnTabelaDePreo.setBounds(411, 534, 226, 23);
+		frame.getContentPane().add(btnTabelaDePreo);
 	}
 }
