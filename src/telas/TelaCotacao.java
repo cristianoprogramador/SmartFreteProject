@@ -23,24 +23,27 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
 
 public class TelaCotacao {
 
 	private JFrame frame;
-	private JTable table;
+	private JTable tabelacubagem;
 	private JTextField txtNF;
 	private JTextField txtPeso;
 	private JTextField txtAltura;
 	private JTextField txtLargura;
 	private JTextField txtQtdeVolume;
 	private JTextField txtComprimento;
+	private JTable tablepreco;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		Locale.setDefault(Locale.US);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -133,14 +136,14 @@ public class TelaCotacao {
 		txtPeso.setBounds(191, 51, 106, 20);
 		panel_1.add(txtPeso);
 		
-		JLabel lblCubagem = new JLabel("");
+		JLabel lblCubagem = new JLabel("0");
 		lblCubagem.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCubagem.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblCubagem.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblCubagem.setBounds(191, 80, 106, 20);
 		panel_1.add(lblCubagem);
 		
-		JLabel lblPesoConsiderado = new JLabel("");
+		JLabel lblPesoConsiderado = new JLabel("0");
 		lblPesoConsiderado.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPesoConsiderado.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPesoConsiderado.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -148,25 +151,25 @@ public class TelaCotacao {
 		panel_1.add(lblPesoConsiderado);
 		
 		JPanel panel_2_1 = new JPanel();
-		panel_2_1.setBounds(371, 284, 336, 239);
+		panel_2_1.setBounds(372, 365, 336, 158);
 		panel_2_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 4), "Informa\u00E7\u00F5es do Destino", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		frame.getContentPane().add(panel_2_1);
 		panel_2_1.setLayout(null);
 		
 		JLabel lblPesoDeclarado_1_2 = new JLabel("Distancia (KM):");
 		lblPesoDeclarado_1_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPesoDeclarado_1_2.setBounds(69, 205, 118, 20);
+		lblPesoDeclarado_1_2.setBounds(44, 112, 118, 20);
 		panel_2_1.add(lblPesoDeclarado_1_2);
 		
-		JLabel lblDistancia = new JLabel("");
+		JLabel lblDistancia = new JLabel("1");
 		lblDistancia.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDistancia.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDistancia.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblDistancia.setBounds(197, 205, 107, 20);
+		lblDistancia.setBounds(183, 111, 107, 20);
 		panel_2_1.add(lblDistancia);
 		
 		JPanel panel_2_2 = new JPanel();
-		panel_2_2.setBounds(746, 72, 336, 411);
+		panel_2_2.setBounds(766, 72, 316, 411);
 		panel_2_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 4), "Valor do Frete", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		frame.getContentPane().add(panel_2_2);
 		panel_2_2.setLayout(null);
@@ -268,12 +271,12 @@ public class TelaCotacao {
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(342, 72, 394, 201);
+		scrollPane.setBounds(342, 72, 414, 124);
 		frame.getContentPane().add(scrollPane);
 		
-		table = new JTable();
-		table.setFont(new Font("Tahoma", Font.BOLD, 14));
-		table.setModel(new DefaultTableModel(
+		tabelacubagem = new JTable();
+		tabelacubagem.setFont(new Font("Tahoma", Font.BOLD, 14));
+		tabelacubagem.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -287,7 +290,7 @@ public class TelaCotacao {
 				return columnTypes[columnIndex];
 			}
 		});
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(tabelacubagem);
 		
 		JComboBox jCmbDestino = new JComboBox();
 		jCmbDestino.addActionListener(new ActionListener() {
@@ -320,20 +323,83 @@ public class TelaCotacao {
 				String fretevalortxt = String.format("%.2f", fretevalor);
 				lblFreteNF.setText(fretevalortxt);
 				
+//-------------------------------Aliquota --------------------
+				
+				lblAliquota.setText("12");
 				
 				
+				//---------------GRIS É FIXO 0,30%-----------
 				
-//------------------------Aliquota --------------------
+				double gris = Double.parseDouble(txtNF.getText()) * 0.003;
+				String gristxt = String.format("%.2f", gris);
+				lblGris.setText(gristxt);
 				
-				lblAliquota.setText("12%");
+//---------------------------------Pedagio --------------------
 				
-//------------------------Aliquota --------------------
+				lblPedagio.setText("4.85");				
 				
-				lblPedagio.setText("4,85");				
+//--------------------------------Peso Considerado --------------------	
+				
+				double pesoconsiderado;
+				if( Double.parseDouble(lblCubagem.getText()) > Double.parseDouble(txtPeso.getText())) {
+					pesoconsiderado = Double.parseDouble(lblCubagem.getText());
+					String pesoconsideradostring = String.format("%.2f", pesoconsiderado);
+					lblPesoConsiderado.setText(pesoconsideradostring);
+				} else {
+					pesoconsiderado = Double.parseDouble(txtPeso.getText());
+					String pesoconsideradostring = String.format("%.2f", pesoconsiderado);
+					lblPesoConsiderado.setText(pesoconsideradostring);
+				}
+				
+//-------------------------------Calculo Frete Peso --------------------					
+				
+				double pesofinalcalculo = Double.parseDouble(lblPesoConsiderado.getText());
+				double distanciafinalcalculo = Double.parseDouble(lblDistancia.getText());
+				double variavelnatabela = 0;
+				int linhadistancia = 0;
+				int colunapeso = 0;
+				
+				if (pesofinalcalculo <= 10) {colunapeso = 1;}
+				else if (pesofinalcalculo <= 20) {colunapeso = 2;}
+				else if (pesofinalcalculo <= 40) {colunapeso = 3;}
+				else if (pesofinalcalculo <= 60) {colunapeso = 4;}
+				else {colunapeso = 5;}	
+				
+				if (distanciafinalcalculo <= 100) {linhadistancia = 0;}
+				else if (distanciafinalcalculo <= 200) {linhadistancia = 1;}
+				else if (distanciafinalcalculo <= 400) {linhadistancia = 2;}
+				else if (distanciafinalcalculo <= 600) {linhadistancia = 3;}
+				else if (distanciafinalcalculo <= 800) {linhadistancia = 4;}
+				else {linhadistancia = 5;}	
+				
+				variavelnatabela = Double.parseDouble(tablepreco.getValueAt(linhadistancia, colunapeso).toString());
+				
+				lblFretePeso.setText(Double.toString(variavelnatabela));
+				
+//-------------------------------Calculo Frete Total --------------------				
+				
+				//lblTotalFrete
+				
+				double somatotaldofrete = 
+						(Double.parseDouble(lblFretePeso.getText())+
+						Double.parseDouble(lblPedagio.getText())+
+						Double.parseDouble(lblGris.getText())+
+						Double.parseDouble(lblFreteNF.getText()))/(1-(Double.parseDouble(lblAliquota.getText())/100));
 				
 				
-				//lblAliquota
-				//lblICMS
+				String somatotaldofretecorreto = String.format("%.2f", somatotaldofrete);
+				lblTotalFrete.setText(somatotaldofretecorreto);
+				
+
+//-------------------------------Calculo ICMS --------------------					
+				
+				double icms = somatotaldofrete - (Double.parseDouble(lblFretePeso.getText())+
+						Double.parseDouble(lblPedagio.getText())+
+						Double.parseDouble(lblGris.getText())+
+						Double.parseDouble(lblFreteNF.getText()));
+				
+				String icmscorreto = String.format("%.2f", icms);
+				lblICMS.setText(icmscorreto);
 				
 			}
 		});
@@ -400,7 +466,7 @@ public class TelaCotacao {
 		jbtnCubagem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model = (DefaultTableModel) tabelacubagem.getModel();
 				model.addRow(new Object[] {
 						txtAltura.getText(),
 						txtLargura.getText(),
@@ -414,21 +480,12 @@ public class TelaCotacao {
 				});
 				double sum = 0;
 				
-				for (int i = 0; i < table.getRowCount(); i++) {
-					sum = sum + Double.parseDouble(table.getValueAt(i, 4).toString());
+				for (int i = 0; i < tabelacubagem.getRowCount(); i++) {
+					sum = sum + Double.parseDouble(tabelacubagem.getValueAt(i, 4).toString());
 					lblCubagem.setText(Double.toString(sum));
 				}
 				
-				double pesoconsiderado;
-				if( Double.parseDouble(lblCubagem.getText()) > Double.parseDouble(txtPeso.getText())) {
-					pesoconsiderado = Double.parseDouble(lblCubagem.getText());
-					String pesoconsideradostring = String.format("%.2f", pesoconsiderado);
-					lblPesoConsiderado.setText(pesoconsideradostring);
-				} else {
-					pesoconsiderado = Double.parseDouble(txtPeso.getText());
-					String pesoconsideradostring = String.format("%.2f", pesoconsiderado);
-					lblPesoConsiderado.setText(pesoconsideradostring);
-				}
+
 								
 			}
 		});
@@ -462,7 +519,34 @@ public class TelaCotacao {
 			}
 		});
 		btnTabelaDePreo.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		btnTabelaDePreo.setBounds(411, 534, 226, 23);
+		btnTabelaDePreo.setBounds(427, 540, 226, 23);
 		frame.getContentPane().add(btnTabelaDePreo);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(342, 230, 414, 124);
+		frame.getContentPane().add(scrollPane_1);
+		
+		tablepreco = new JTable();
+		tablepreco.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"100", "37.30", "47.27", "58.51", "72.04", "86.23"},
+				{"200", "41.14", "51.11", "63.64", "79.58", "93.93"},
+				{"400", "49.97", "63.64", "76.17", "92.11", "109.83"},
+				{"600", "61.21", "78.58", "96.10", "114.47", "135.56"},
+				{"800", "74.74", "91.82", "111.75", "131.97", "156.07"},
+				{"1000", "85.14", "106.64", "125.42", "149.19", "175.03"},
+			},
+			new String[] {
+				"KM/Peso", "10", "20", "40", "60", "100"
+			}
+		));
+		tablepreco.getColumnModel().getColumn(0).setPreferredWidth(86);
+		tablepreco.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		scrollPane_1.setViewportView(tablepreco);
+		
+		JLabel lblTabelaDePreo = new JLabel("Tabela de Pre\u00E7o Padr\u00E3o");
+		lblTabelaDePreo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTabelaDePreo.setBounds(455, 207, 182, 20);
+		frame.getContentPane().add(lblTabelaDePreo);
 	}
 }
