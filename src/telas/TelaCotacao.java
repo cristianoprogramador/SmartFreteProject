@@ -251,7 +251,7 @@ public class TelaCotacao {
 		lblICMS.setBounds(164, 264, 121, 34);
 		panel_2_2.add(lblICMS);
 		
-		JLabel lblNewLabel_1_2_1_3_2 = new JLabel("% Aliquota");
+		JLabel lblNewLabel_1_2_1_3_2 = new JLabel("Aliquota (%)");
 		lblNewLabel_1_2_1_3_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1_3_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1_2_1_3_2.setBounds(29, 309, 125, 34);
@@ -407,10 +407,7 @@ public class TelaCotacao {
 		jbtnCalcular.setBounds(756, 500, 96, 23);
 		frame.getContentPane().add(jbtnCalcular);
 		
-		JButton jbtnLimpar = new JButton("Limpar");
-		jbtnLimpar.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		jbtnLimpar.setBounds(877, 500, 89, 23);
-		frame.getContentPane().add(jbtnLimpar);
+
 		
 		JButton jbtnSair = new JButton("Sair");
 		jbtnSair.addActionListener(new ActionListener() {
@@ -482,7 +479,8 @@ public class TelaCotacao {
 				
 				for (int i = 0; i < tabelacubagem.getRowCount(); i++) {
 					sum = sum + Double.parseDouble(tabelacubagem.getValueAt(i, 4).toString());
-					lblCubagem.setText(Double.toString(sum));
+					String sumstring = String.format("%.2f", sum);
+					lblCubagem.setText(sumstring);
 				}
 				
 
@@ -512,15 +510,7 @@ public class TelaCotacao {
 		txtComprimento.setBounds(191, 85, 106, 20);
 		panel_1_1.add(txtComprimento);
 		
-		JButton btnTabelaDePreo = new JButton("Tabela de Pre\u00E7o");
-		btnTabelaDePreo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TabelaPreco.main(null);
-			}
-		});
-		btnTabelaDePreo.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		btnTabelaDePreo.setBounds(427, 540, 226, 23);
-		frame.getContentPane().add(btnTabelaDePreo);
+	
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(342, 230, 414, 124);
@@ -548,5 +538,41 @@ public class TelaCotacao {
 		lblTabelaDePreo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTabelaDePreo.setBounds(455, 207, 182, 20);
 		frame.getContentPane().add(lblTabelaDePreo);
+		
+		JButton jbtnLimpar = new JButton("Limpar");
+		jbtnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				lblAliquota.setText(null);
+				lblICMS.setText(null);
+				lblGris.setText(null);
+				lblPedagio.setText(null);
+				lblFreteNF.setText(null);
+				lblFretePeso.setText(null);
+				lblTotalFrete.setText(null);
+				
+				
+				
+				
+				DefaultTableModel model = (DefaultTableModel) tabelacubagem.getModel();
+				if (tabelacubagem.getSelectedRow()==-1) {
+					if(tabelacubagem.getRowCount()==0) {
+						JOptionPane.showMessageDialog(null, "Sem dados de cubagem para deletar", "SmartFrete System",
+								JOptionPane.OK_OPTION);
+						}else {
+							JOptionPane.showMessageDialog(null, "Selecione a linha da tabela de cubagem para deletar ", "SmartFrete System", 
+									JOptionPane.OK_OPTION);
+						}
+				}else {
+					model.removeRow(tabelacubagem.getSelectedRow());
+				}
+				
+			}
+		});
+		jbtnLimpar.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		jbtnLimpar.setBounds(877, 500, 89, 23);
+		frame.getContentPane().add(jbtnLimpar);
+		
+		
 	}
 }
