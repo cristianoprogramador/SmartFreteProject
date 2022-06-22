@@ -202,67 +202,80 @@ public class TelaCotacao {
 		JLabel lblNewLabel_1_2_1_1 = new JLabel("Frete Valor");
 		lblNewLabel_1_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2_1_1.setBounds(29, 129, 125, 34);
+		lblNewLabel_1_2_1_1.setBounds(29, 172, 125, 34);
 		panel_2_2.add(lblNewLabel_1_2_1_1);
 		
 		JLabel lblFreteNF = new JLabel("");
 		lblFreteNF.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFreteNF.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblFreteNF.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblFreteNF.setBounds(164, 129, 121, 34);
+		lblFreteNF.setBounds(164, 172, 121, 34);
 		panel_2_2.add(lblFreteNF);
 		
 		JLabel lblNewLabel_1_2_1_2 = new JLabel("Valor Ped\u00E1gio");
 		lblNewLabel_1_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2_1_2.setBounds(29, 174, 125, 34);
+		lblNewLabel_1_2_1_2.setBounds(29, 217, 125, 34);
 		panel_2_2.add(lblNewLabel_1_2_1_2);
 		
 		JLabel lblPedagio = new JLabel("");
 		lblPedagio.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPedagio.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPedagio.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblPedagio.setBounds(164, 174, 121, 34);
+		lblPedagio.setBounds(164, 217, 121, 34);
 		panel_2_2.add(lblPedagio);
 		
 		JLabel lblNewLabel_1_2_1_3 = new JLabel("Gris/Ademe");
 		lblNewLabel_1_2_1_3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2_1_3.setBounds(29, 219, 125, 34);
+		lblNewLabel_1_2_1_3.setBounds(29, 262, 125, 34);
 		panel_2_2.add(lblNewLabel_1_2_1_3);
 		
 		JLabel lblGris = new JLabel("");
 		lblGris.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblGris.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblGris.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblGris.setBounds(164, 219, 121, 34);
+		lblGris.setBounds(164, 262, 121, 34);
 		panel_2_2.add(lblGris);
 		
 		JLabel lblNewLabel_1_2_1_3_1 = new JLabel("ICMS");
 		lblNewLabel_1_2_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2_1_3_1.setBounds(29, 264, 125, 34);
+		lblNewLabel_1_2_1_3_1.setBounds(29, 307, 125, 34);
 		panel_2_2.add(lblNewLabel_1_2_1_3_1);
 		
 		JLabel lblICMS = new JLabel("");
 		lblICMS.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblICMS.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblICMS.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblICMS.setBounds(164, 264, 121, 34);
+		lblICMS.setBounds(164, 307, 121, 34);
 		panel_2_2.add(lblICMS);
 		
 		JLabel lblNewLabel_1_2_1_3_2 = new JLabel("Aliquota (%)");
 		lblNewLabel_1_2_1_3_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1_3_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2_1_3_2.setBounds(29, 309, 125, 34);
+		lblNewLabel_1_2_1_3_2.setBounds(29, 352, 125, 34);
 		panel_2_2.add(lblNewLabel_1_2_1_3_2);
 		
 		JLabel lblAliquota = new JLabel("");
 		lblAliquota.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAliquota.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblAliquota.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblAliquota.setBounds(164, 309, 121, 34);
+		lblAliquota.setBounds(164, 352, 121, 34);
 		panel_2_2.add(lblAliquota);
+		
+		JLabel lblExcedentePeso = new JLabel("Excedente (>100kg)");
+		lblExcedentePeso.setHorizontalAlignment(SwingConstants.LEFT);
+		lblExcedentePeso.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblExcedentePeso.setBounds(29, 127, 125, 34);
+		panel_2_2.add(lblExcedentePeso);
+		
+		JLabel lblFretePesoExc = new JLabel("");
+		lblFretePesoExc.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFretePesoExc.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblFretePesoExc.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblFretePesoExc.setBounds(164, 127, 121, 34);
+		panel_2_2.add(lblFretePesoExc);
 		
 		JLabel lblNewLabel_2 = new JLabel("Simulador de Frete - SmartFrete 1.0");
 		lblNewLabel_2.setBounds(58, 11, 996, 50);
@@ -375,25 +388,44 @@ public class TelaCotacao {
 				variavelnatabela = Double.parseDouble(tablepreco.getValueAt(linhadistancia, colunapeso).toString());
 				
 				lblFretePeso.setText(Double.toString(variavelnatabela));
+
+	//-------------------------------Calculo Excedente de Peso --------------------				
+				
+				double excedente = 0;
+				double precodatabelafinal = Double.parseDouble(lblFretePeso.getText());
+				
+				
+				if (pesofinalcalculo > 100) {
+					
+					excedente = (pesofinalcalculo - 100) * (precodatabelafinal / 100);
+
+				} else { excedente = 0;}
+				
+				String excedentetabela = String.format("%.2f", excedente);
+				lblFretePesoExc.setText(excedentetabela);
+				
+				
 				
 //-------------------------------Calculo Frete Total --------------------				
 				
-				//lblTotalFrete
+				
 				
 				double somatotaldofrete = 
 						(Double.parseDouble(lblFretePeso.getText())+
+						Double.parseDouble(lblFretePesoExc.getText())+
 						Double.parseDouble(lblPedagio.getText())+
 						Double.parseDouble(lblGris.getText())+
 						Double.parseDouble(lblFreteNF.getText()))/(1-(Double.parseDouble(lblAliquota.getText())/100));
 				
 				
-				String somatotaldofretecorreto = String.format("%.2f", somatotaldofrete);
+				String somatotaldofretecorreto = String.format("R$: %.2f", somatotaldofrete);
 				lblTotalFrete.setText(somatotaldofretecorreto);
 				
 
 //-------------------------------Calculo ICMS --------------------					
 				
 				double icms = somatotaldofrete - (Double.parseDouble(lblFretePeso.getText())+
+						Double.parseDouble(lblFretePesoExc.getText())+
 						Double.parseDouble(lblPedagio.getText())+
 						Double.parseDouble(lblGris.getText())+
 						Double.parseDouble(lblFreteNF.getText()));
@@ -551,8 +583,14 @@ public class TelaCotacao {
 				lblFretePeso.setText(null);
 				lblTotalFrete.setText(null);
 				
-				
-				
+				txtNF.setText("0");
+				txtPeso.setText("0");
+				lblCubagem.setText("0");
+				lblPesoConsiderado.setText("0");
+				txtAltura.setText("0");
+				txtLargura.setText("0");
+				txtComprimento.setText("0");
+				txtQtdeVolume.setText("0");
 				
 				DefaultTableModel model = (DefaultTableModel) tabelacubagem.getModel();
 				if (tabelacubagem.getSelectedRow()==-1) {
